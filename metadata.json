@@ -1,0 +1,11 @@
+{
+  "name": "Vitality District Health Surveillance & Supply Chain",
+  "description": "Unified tripartite health dashboard for Primary Health Centres, District Medical Officers, and Government Hospitals with Gemini-powered ledger extraction, offline attendance, dynamic epidemic mapping, and automated logistics.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
