@@ -230,84 +230,84 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
   const isGeofenceOk = distanceMeters !== null ? distanceMeters <= 500 : true;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl text-slate-100 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/75 backdrop-blur-sm p-4 overflow-y-auto">
+      <div className="bg-slate-50 border border-slate-300 rounded-2xl w-full max-w-lg shadow-2xl text-slate-900 overflow-hidden">
         {/* Modal Header */}
-        <div className="p-4 bg-slate-800/80 border-b border-slate-700 flex items-center justify-between">
+        <div className="p-4 bg-slate-100/80 border-b border-slate-300 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-600 flex items-center justify-center">
               <Camera className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="font-semibold text-sm sm:text-base text-white">
+              <h2 className="font-semibold text-sm sm:text-base text-slate-900">
                 Facial Photo Attendance Verification
               </h2>
-              <div className="text-xs text-slate-400 flex items-center gap-2">
+              <div className="text-xs text-slate-600 flex items-center gap-2">
                 <span>{userSession.name}</span>
                 <span>•</span>
-                <span className="capitalize text-amber-300 font-medium">{areaType} Mandatory Protocol</span>
+                <span className="capitalize text-amber-700 font-medium">{areaType} Mandatory Protocol</span>
               </div>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-700"
+            className="text-slate-600 hover:text-slate-900 p-1 rounded-lg hover:bg-slate-700"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Internal Clock Attendance Status Banner */}
-        <div className="p-4 bg-slate-800/40 border-b border-slate-800">
+        <div className="p-4 bg-slate-100/40 border-b border-slate-200">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-center">
-            <div className="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
-              <div className="text-[11px] text-slate-400 flex items-center justify-center gap-1">
-                <Clock className="w-3 h-3 text-sky-400" />
+            <div className="bg-slate-100/80 p-2.5 rounded-xl border border-slate-300/60">
+              <div className="text-[11px] text-slate-600 flex items-center justify-center gap-1">
+                <Clock className="w-3 h-3 text-sky-600" />
                 <span>Cycle Frequency</span>
               </div>
-              <div className="text-sm font-bold text-slate-200 mt-0.5">
+              <div className="text-sm font-bold text-slate-800 mt-0.5">
                 {intervalMinutes} Minutes
               </div>
-              <div className="text-[10px] text-slate-400">
+              <div className="text-[10px] text-slate-600">
                 {isUrban ? 'Urban (Every 4 hrs)' : 'Rural (Every 2 hrs)'}
               </div>
             </div>
 
             <div className={`p-2.5 rounded-xl border ${
               attendanceStatus.isOverdue
-                ? 'bg-rose-950/40 border-rose-800/60 text-rose-300'
+                ? 'bg-rose-50 border-rose-200 text-rose-700'
                 : attendanceStatus.isDue
-                ? 'bg-amber-950/40 border-amber-800/60 text-amber-300'
-                : 'bg-slate-800/80 border-slate-700/60 text-emerald-300'
+                ? 'bg-amber-50 border-amber-200 text-amber-700'
+                : 'bg-slate-100/80 border-slate-300/60 text-emerald-700'
             }`}>
-              <div className="text-[11px] text-slate-400">Time Remaining</div>
+              <div className="text-[11px] text-slate-600">Time Remaining</div>
               <div className="text-sm font-bold mt-0.5">
                 {attendanceStatus.isOverdue ? (
-                  <span className="text-rose-400 font-bold animate-pulse">OVERDUE</span>
+                  <span className="text-rose-600 font-bold animate-pulse">OVERDUE</span>
                 ) : (
                   `${attendanceStatus.minutesRemaining}m ${attendanceStatus.secondsRemaining}s`
                 )}
               </div>
-              <div className="text-[10px] text-slate-400">Internal Clock</div>
+              <div className="text-[10px] text-slate-600">Internal Clock</div>
             </div>
 
-            <div className="col-span-2 sm:col-span-1 bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
-              <div className="text-[11px] text-slate-400 flex items-center justify-center gap-1">
-                <MapPin className="w-3 h-3 text-amber-400" />
+            <div className="col-span-2 sm:col-span-1 bg-slate-100/80 p-2.5 rounded-xl border border-slate-300/60">
+              <div className="text-[11px] text-slate-600 flex items-center justify-center gap-1">
+                <MapPin className="w-3 h-3 text-amber-600" />
                 <span>Geofencing</span>
               </div>
               <div className="text-sm font-bold mt-0.5">
                 {gpsLoading ? (
-                  <span className="text-xs text-slate-400">Locating...</span>
+                  <span className="text-xs text-slate-600">Locating...</span>
                 ) : isUrban ? (
-                  <span className={isGeofenceOk ? 'text-emerald-400' : 'text-rose-400'}>
+                  <span className={isGeofenceOk ? 'text-emerald-600' : 'text-rose-600'}>
                     {distanceMeters !== null ? `${distanceMeters}m away` : 'Verified'}
                   </span>
                 ) : (
-                  <span className="text-emerald-400">Exempt (Rural)</span>
+                  <span className="text-emerald-600">Exempt (Rural)</span>
                 )}
               </div>
-              <div className="text-[10px] text-slate-400">
+              <div className="text-[10px] text-slate-600">
                 {isUrban ? 'Strict Store Perimeter' : 'Rural GPS Tagged'}
               </div>
             </div>
@@ -315,8 +315,8 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
 
           {/* Urban Warning if Out of Geofence */}
           {isUrban && distanceMeters !== null && distanceMeters > 500 && (
-            <div className="mt-2.5 p-2 rounded-lg bg-rose-950/60 border border-rose-800 text-rose-300 text-xs flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+            <div className="mt-2.5 p-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
               <span>Warning: Current position is {distanceMeters}m from registered store perimeter. Urban protocol requires check-in within designated zone.</span>
             </div>
           )}
@@ -324,7 +324,7 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
 
         {/* Camera / Capture Section */}
         <div className="p-5 space-y-4">
-          <div className="relative aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
+          <div className="relative aspect-video bg-white rounded-xl overflow-hidden border border-slate-200 flex items-center justify-center">
             {photoData ? (
               <div className="relative w-full h-full">
                 <img
@@ -332,13 +332,13 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
                   alt="Captured Selfie"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-2 left-2 right-2 bg-slate-950/80 backdrop-blur-sm p-2 rounded-lg text-xs flex items-center justify-between text-slate-200">
-                  <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
+                <div className="absolute bottom-2 left-2 right-2 bg-white/80 backdrop-blur-sm p-2 rounded-lg text-xs flex items-center justify-between text-slate-800">
+                  <span className="flex items-center gap-1.5 text-emerald-600 font-medium">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Photo Staged with Timestamp
                   </span>
                   <button
                     onClick={() => setPhotoData(null)}
-                    className="text-xs text-slate-400 hover:text-white underline"
+                    className="text-xs text-slate-600 hover:text-slate-900 underline"
                   >
                     Retake
                   </button>
@@ -354,7 +354,7 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 pointer-events-none border-2 border-dashed border-sky-400/40 m-6 rounded-2xl flex items-center justify-center">
-                  <span className="text-[11px] text-sky-200 bg-slate-900/80 px-2 py-1 rounded">
+                  <span className="text-[11px] text-sky-800 bg-slate-50/80 px-2 py-1 rounded">
                     Position Face Within Guide
                   </span>
                 </div>
@@ -362,7 +362,7 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
             ) : (
               <div className="text-center p-4">
                 <Camera className="w-12 h-12 text-slate-600 mx-auto mb-2" />
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-600">
                   Facial snapshot is encrypted with local timestamp & GPS coordinates.
                 </p>
               </div>
@@ -396,7 +396,7 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
                 </button>
                 <button
                   onClick={stopCamera}
-                  className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs"
+                  className="px-3 py-2 bg-slate-100 hover:bg-slate-700 text-slate-700 rounded-lg text-xs"
                 >
                   Cancel
                 </button>
@@ -409,14 +409,14 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
             <div
               className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
                 statusMessage.type === 'success'
-                  ? 'bg-emerald-950/60 border border-emerald-800 text-emerald-200'
-                  : 'bg-rose-950/60 border border-rose-800 text-rose-200'
+                  ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+                  : 'bg-rose-50 border border-rose-200 text-rose-800'
               }`}
             >
               {statusMessage.type === 'success' ? (
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               ) : (
-                <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
               )}
               <span>{statusMessage.text}</span>
             </div>
@@ -424,10 +424,10 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 bg-slate-800/80 border-t border-slate-700 flex items-center justify-between">
-          <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
+        <div className="p-4 bg-slate-100/80 border-t border-slate-300 flex items-center justify-between">
+          <div className="text-[11px] text-slate-600 flex items-center gap-1.5">
             {!OfflineSyncManager.isOnline() ? (
-              <span className="text-amber-400 flex items-center gap-1">
+              <span className="text-amber-600 flex items-center gap-1">
                 <WifiOff className="w-3.5 h-3.5" /> Offline mode active: will queue locally
               </span>
             ) : (
@@ -438,7 +438,7 @@ export const AttendanceModal: React.FC<AttendanceModalProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-700"
+              className="px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-700"
             >
               Close
             </button>

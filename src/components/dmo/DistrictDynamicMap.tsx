@@ -31,44 +31,44 @@ export const DistrictDynamicMap: React.FC<DistrictDynamicMapProps> = ({
   ];
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg relative z-0">
-      <div className="p-4 bg-slate-800/80 border-b border-slate-700 flex flex-wrap items-center justify-between gap-3 relative z-10">
+    <div className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden shadow-lg relative z-0">
+      <div className="p-4 bg-slate-100/80 border-b border-slate-300 flex flex-wrap items-center justify-between gap-3 relative z-10">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-600 flex items-center justify-center">
             <Layers className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
               Dynamic District Health & Epidemic GIS Map
             </h3>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-600">
               Interactive map with live epidemic threats, PHC drug shortages, bed occupancies, and UCP routing.
             </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700 text-xs">
+        <div className="flex flex-wrap items-center gap-1.5 bg-slate-50 p-1 rounded-xl border border-slate-300 text-xs">
           <button
             onClick={() => setActiveLayer('all')}
-            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'all' ? 'bg-sky-600 text-white' : 'text-slate-400'}`}
+            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'all' ? 'bg-sky-600 text-white' : 'text-slate-600'}`}
           >
             All Layers
           </button>
           <button
             onClick={() => setActiveLayer('shortages')}
-            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'shortages' ? 'bg-rose-600 text-white' : 'text-slate-400'}`}
+            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'shortages' ? 'bg-rose-600 text-white' : 'text-slate-600'}`}
           >
             PHC Shortages
           </button>
           <button
             onClick={() => setActiveLayer('threats')}
-            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'threats' ? 'bg-amber-600 text-white' : 'text-slate-400'}`}
+            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'threats' ? 'bg-amber-600 text-white' : 'text-slate-600'}`}
           >
             Warnings (IMD/CWC/NDMA)
           </button>
           <button
             onClick={() => setActiveLayer('hospitals')}
-            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'hospitals' ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}
+            className={`px-3 py-1 rounded-lg transition ${activeLayer === 'hospitals' ? 'bg-indigo-600 text-white' : 'text-slate-600'}`}
           >
             Govt Hospitals
           </button>

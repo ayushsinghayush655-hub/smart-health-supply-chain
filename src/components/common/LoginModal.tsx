@@ -71,23 +71,23 @@ export const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-center items-center p-4">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-900/20 via-slate-950 to-slate-950 pointer-events-none"></div>
 
       <div className="w-full max-w-lg relative z-10 space-y-6">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-amber-400 font-semibold tracking-wide uppercase">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-xs text-amber-600 font-semibold tracking-wide uppercase">
             <Shield className="w-3.5 h-3.5" />
             <span>Government of India</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
             Vitality Command & Surveillance
           </h1>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
           <div className="space-y-2 text-center sm:text-left">
-            <h2 className="text-base sm:text-lg font-bold text-white">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900">
               Secure Staff Login
             </h2>
           </div>
@@ -95,7 +95,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
           <form onSubmit={handleFormSubmit} className="space-y-4 pt-2">
             <div className="space-y-3">
               <div>
-                <label className="text-xs text-slate-300 font-medium block mb-1">
+                <label className="text-xs text-slate-700 font-medium block mb-1">
                   Official NHM ID / Username
                 </label>
                 <div className="relative">
@@ -105,13 +105,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full pl-9 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium block mb-1">
+                <label className="text-xs text-slate-700 font-medium block mb-1">
                   Security Passcode / Token
                 </label>
                 <div className="relative">
@@ -121,16 +121,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full pl-9 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                   />
                 </div>
               </div>
             </div>
 
-            {errorMsg && <div className="p-3 bg-rose-950/60 border border-rose-800 text-rose-300 text-xs rounded-xl">{errorMsg}</div>}
+            {errorMsg && <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl">{errorMsg}</div>}
             
-            <div className="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-xs text-slate-400">
-              <p className="font-semibold text-slate-200 mb-1">Demo Credentials:</p>
+            <div className="p-3 bg-white/80 rounded-xl border border-slate-200 text-xs text-slate-600">
+              <p className="font-semibold text-slate-800 mb-1">Demo Credentials:</p>
               <ul className="list-disc list-inside space-y-1">
                 <li>PHC Incharge: <b>moic_phc01</b> / password123</li>
                 <li>DMO: <b>dmo_kanpur</b> / password123</li>
@@ -142,7 +142,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
               <button
                 id="btn-login-submit"
                 type="submit"
-                className="w-full py-3 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2 transition cursor-pointer"
+                className="w-full py-3 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-slate-900 font-bold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2 transition cursor-pointer"
               >
                 <span>Secure Login</span>
                 <ArrowRight className="w-4 h-4" />

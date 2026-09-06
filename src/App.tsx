@@ -103,7 +103,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
       {/* Top Navigation & Status Header */}
       <Header
         userSession={userSession}
@@ -143,17 +143,7 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-900/60 py-4 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>
-            AarogyaNet • National Health Mission • Integrated Health Logistics & Outbreak Warning Platform
-          </span>
-          <span>
-            Offline-First Protocol • Geofenced Biometrics • AI Supply Redistribution
-          </span>
-        </div>
-      </footer>
+      
 
       {/* Attendance Biometric & Geofence Modal */}
       <AttendanceModal
@@ -167,7 +157,7 @@ export default function App() {
       {/* Help & Gemini Chat Widget */}
       <HelpChatWidget />
 
-      {/* Med-PaLM Multi-Agency AI Reasoning Modal */}
+      {/* Gemini Multi-Agency AI Reasoning Modal */}
       <MedPalmModal
         isOpen={isMedPalmModalOpen}
         onClose={() => setIsMedPalmModalOpen(false)}

@@ -88,23 +88,23 @@ export const HelpChatWidget: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-full max-w-sm sm:max-w-md h-[550px] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50">
+    <div className="fixed bottom-6 right-6 w-full max-w-sm sm:max-w-md h-[550px] bg-slate-50 border border-slate-300 rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50">
       {/* Header */}
-      <div className="px-4 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+      <div className="px-4 py-3 bg-white border-b border-slate-200 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Bot className="w-5 h-5 text-sky-400" />
-          <h3 className="font-bold text-white text-sm">Vitality AI Support</h3>
+          <Bot className="w-5 h-5 text-sky-600" />
+          <h3 className="font-bold text-slate-900 text-sm">Vitality AI Support</h3>
         </div>
-        <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-white transition">
+        <button onClick={() => setIsOpen(false)} className="text-slate-600 hover:text-slate-900 transition">
           <X className="w-5 h-5" />
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-slate-800 bg-slate-950 text-xs">
+      <div className="flex border-b border-slate-200 bg-white text-xs">
         <button
           onClick={() => setActiveTab('help')}
-          className={`flex-1 py-2.5 font-semibold transition ${activeTab === 'help' ? 'text-amber-400 border-b-2 border-amber-400 bg-slate-900/50' : 'text-slate-400 hover:text-slate-200'}`}
+          className={`flex-1 py-2.5 font-semibold transition ${activeTab === 'help' ? 'text-amber-600 border-b-2 border-amber-400 bg-slate-50/50' : 'text-slate-600 hover:text-slate-800'}`}
         >
           <div className="flex items-center justify-center gap-1.5">
             <HelpCircle className="w-3.5 h-3.5" /> Quick Guide
@@ -112,7 +112,7 @@ export const HelpChatWidget: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('chat')}
-          className={`flex-1 py-2.5 font-semibold transition ${activeTab === 'chat' ? 'text-sky-400 border-b-2 border-sky-400 bg-slate-900/50' : 'text-slate-400 hover:text-slate-200'}`}
+          className={`flex-1 py-2.5 font-semibold transition ${activeTab === 'chat' ? 'text-sky-600 border-b-2 border-sky-400 bg-slate-50/50' : 'text-slate-600 hover:text-slate-800'}`}
         >
           <div className="flex items-center justify-center gap-1.5">
             <MessageCircle className="w-3.5 h-3.5" /> AI Chat
@@ -121,14 +121,14 @@ export const HelpChatWidget: React.FC = () => {
       </div>
 
       {/* Content Body */}
-      <div className="flex-1 overflow-y-auto p-4 custom-scrollbar bg-slate-900">
+      <div className="flex-1 overflow-y-auto p-4 custom-scrollbar bg-slate-50">
         {activeTab === 'help' ? (
-          <div className="space-y-4 text-xs text-slate-300">
-            <h4 className="font-bold text-white text-sm">Welcome to Vitality Command</h4>
+          <div className="space-y-4 text-xs text-slate-700">
+            <h4 className="font-bold text-slate-900 text-sm">Welcome to Vitality Command</h4>
             <p>This platform connects Primary Health Centres (PHC), District Medical Officers (DMO), and Government Hospitals to create a unified surveillance network.</p>
             
             <div className="space-y-2">
-              <h5 className="font-bold text-amber-400">PHC Dashboard</h5>
+              <h5 className="font-bold text-amber-600">PHC Dashboard</h5>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Use the <strong>Live Attendance</strong> button to verify identity via Geofenced Webcam.</li>
                 <li>Upload stock registries using the <strong>AI Vision Extractor</strong>.</li>
@@ -136,23 +136,23 @@ export const HelpChatWidget: React.FC = () => {
             </div>
             
             <div className="space-y-2">
-              <h5 className="font-bold text-sky-400">DMO Dashboard</h5>
+              <h5 className="font-bold text-sky-600">DMO Dashboard</h5>
               <ul className="list-disc pl-4 space-y-1">
                 <li>View the <strong>Interactive GIS Map</strong> for live epidemic alerts (Red/Orange zones).</li>
-                <li>Run <strong>Med-PaLM Threat Analysis</strong> to auto-allocate medicines and ventilators.</li>
+                <li>Run <strong>Gemini Threat Analysis</strong> to auto-allocate medicines and ventilators.</li>
               </ul>
             </div>
 
             <div className="space-y-2">
-              <h5 className="font-bold text-indigo-400">Hospital Dashboard</h5>
+              <h5 className="font-bold text-indigo-600">Hospital Dashboard</h5>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Track live ICU and Ventilator availability.</li>
                 <li>Quickly admit patients and allocate beds in real-time.</li>
               </ul>
             </div>
             
-            <div className="mt-4 p-3 bg-slate-800 rounded-xl border border-slate-700">
-              <p className="font-semibold text-white mb-1">Have more questions?</p>
+            <div className="mt-4 p-3 bg-slate-100 rounded-xl border border-slate-300">
+              <p className="font-semibold text-slate-900 mb-1">Have more questions?</p>
               <p>Switch to the <strong>AI Chat</strong> tab to ask Gemini for help with platform usage, logistics, or clinical definitions.</p>
             </div>
           </div>
@@ -161,9 +161,9 @@ export const HelpChatWidget: React.FC = () => {
             {messages.map(msg => (
               <div key={msg.id} className={`flex gap-2 max-w-[85%] ${msg.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}>
                 <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-1 ${msg.role === 'user' ? 'bg-sky-600' : 'bg-slate-700'}`}>
-                  {msg.role === 'user' ? <User className="w-3.5 h-3.5 text-white" /> : <Bot className="w-3.5 h-3.5 text-sky-400" />}
+                  {msg.role === 'user' ? <User className="w-3.5 h-3.5 text-slate-900" /> : <Bot className="w-3.5 h-3.5 text-sky-600" />}
                 </div>
-                <div className={`p-3 rounded-xl text-xs leading-relaxed ${msg.role === 'user' ? 'bg-sky-600 text-white rounded-tr-sm' : 'bg-slate-800 border border-slate-700 text-slate-200 rounded-tl-sm'}`}>
+                <div className={`p-3 rounded-xl text-xs leading-relaxed ${msg.role === 'user' ? 'bg-sky-600 text-white rounded-tr-sm' : 'bg-slate-100 border border-slate-300 text-slate-800 rounded-tl-sm'}`}>
                   {msg.content}
                 </div>
               </div>
@@ -171,11 +171,11 @@ export const HelpChatWidget: React.FC = () => {
             {isTyping && (
               <div className="flex gap-2 max-w-[85%]">
                 <div className="w-6 h-6 rounded-full bg-slate-700 flex items-center justify-center shrink-0 mt-1">
-                  <Bot className="w-3.5 h-3.5 text-sky-400" />
+                  <Bot className="w-3.5 h-3.5 text-sky-600" />
                 </div>
-                <div className="p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 rounded-tl-sm flex items-center gap-1.5">
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-400" />
-                  <span className="text-xs text-slate-400">Thinking...</span>
+                <div className="p-3 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 rounded-tl-sm flex items-center gap-1.5">
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-600" />
+                  <span className="text-xs text-slate-600">Thinking...</span>
                 </div>
               </div>
             )}
@@ -186,14 +186,14 @@ export const HelpChatWidget: React.FC = () => {
 
       {/* Input Area */}
       {activeTab === 'chat' && (
-        <form onSubmit={handleSendMessage} className="p-3 bg-slate-950 border-t border-slate-800 flex gap-2">
+        <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-slate-200 flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question..."
             disabled={isTyping}
-            className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500 disabled:opacity-50"
+            className="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-sky-500 disabled:opacity-50"
           />
           <button
             type="submit"

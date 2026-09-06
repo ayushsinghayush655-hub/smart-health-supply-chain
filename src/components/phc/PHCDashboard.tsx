@@ -113,7 +113,7 @@ export const PHCDashboard: React.FC<PHCDashboardProps> = ({
     ctx.fillText('GOVERNMENT PHC DAILY DISPENSING REGISTER - STORE ' + userSession.storeId, 30, 25);
 
     ctx.font = '11px sans-serif';
-    ctx.fillText('DATE: ' + new Date().toLocaleDateString() + ' | MOIC ID: ' + userSession.inchargeId, 30, 55);
+    ctx.fillText('DATE: ' + new Date().toLocaleDateString() + ' | PHC ID: ' + userSession.inchargeId, 30, 55);
     ctx.fillText('1. Paracetamol 500mg IP (Batch: PCM-25A-102) - 40 Tabs dispensed (OPD-9102)', 30, 95);
     ctx.fillText('2. WHO ORS Sachets 20.5g (Batch: ORS-24D-89) - 25 Sachets issued (OPD-9103)', 30, 130);
     ctx.fillText('3. Doxycycline 100mg IP (Batch: DOX-24H-44) - 30 Caps issued (OPD-9104)', 30, 165);
@@ -200,7 +200,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
           inchargeId: userSession.inchargeId,
           uploadMethod,
           rawContent: uploadMethod === 'excel' ? excelText : uploadMethod === 'barcode_scanner' ? barcodeInput : undefined,
-          fileBase64: uploadMethod === 'photo' ? photoPreview : undefined,
+          fileBase64: uploadMethod === 'photo' && photoPreview ? photoPreview.split(',')[1] : undefined,
           mimeType: 'image/jpeg',
         }),
       });
@@ -237,27 +237,27 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
   return (
     <div className="space-y-6">
       {/* Attendance & Store Credentials Hero Card */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
                 PHC CLINICAL STORE
               </span>
-              <span className="text-xs text-slate-400 font-mono">
-                Store ID: <strong className="text-slate-200">{userSession.storeId || 'STORE-KLY-901'}</strong>
+              <span className="text-xs text-slate-600 font-mono">
+                Store ID: <strong className="text-slate-800">{userSession.storeId || 'STORE-KLY-901'}</strong>
               </span>
-              <span className="text-xs text-slate-400 font-mono">
-                MOIC ID: <strong className="text-slate-200">{userSession.inchargeId || 'MOIC-101'}</strong>
+              <span className="text-xs text-slate-600 font-mono">
+                PHC ID: <strong className="text-slate-800">{userSession.inchargeId || 'MOIC-101'}</strong>
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
               {userSession.facilityName}
-              <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 capitalize border border-slate-700">
+              <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 capitalize border border-slate-300">
                 {areaType} Zone
               </span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600">
               Primary healthcare medicine dispensing node, ledger synchronization, and attendance compliance.
             </p>
           </div>
@@ -265,24 +265,24 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
           {/* Internal Device Clock Attendance Status Card */}
           <div className={`p-4 rounded-xl border flex items-center justify-between gap-4 ${
             attendanceStatus.isOverdue
-              ? 'bg-rose-950/40 border-rose-800 text-rose-300'
+              ? 'bg-rose-50 border-rose-200 text-rose-700'
               : attendanceStatus.isDue
-              ? 'bg-amber-950/40 border-amber-800 text-amber-300'
-              : 'bg-slate-800/80 border-slate-700 text-slate-300'
+              ? 'bg-amber-50 border-amber-200 text-amber-700'
+              : 'bg-slate-100/80 border-slate-300 text-slate-700'
           }`}>
             <div className="space-y-0.5">
               <div className="text-[11px] font-semibold flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-sky-400" />
+                <Clock className="w-3.5 h-3.5 text-sky-600" />
                 <span>Attendance Countdown ({areaType === 'urban' ? '240m Urban' : '120m Rural'})</span>
               </div>
               <div className="text-lg font-mono font-bold">
                 {attendanceStatus.isOverdue ? (
-                  <span className="text-rose-400 animate-pulse">ATTENDANCE DUE NOW</span>
+                  <span className="text-rose-600 animate-pulse">ATTENDANCE DUE NOW</span>
                 ) : (
                   <span>{attendanceStatus.minutesRemaining}m {attendanceStatus.secondsRemaining}s remaining</span>
                 )}
               </div>
-              <div className="text-[10px] text-slate-400">
+              <div className="text-[10px] text-slate-600">
                 Next required by: {attendanceStatus.nextDueAt} (Device Internal Clock)
               </div>
             </div>
@@ -300,13 +300,13 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex border-b border-slate-800 text-xs font-medium space-x-1 sm:space-x-3 overflow-x-auto pb-1">
+      <div className="flex border-b border-slate-200 text-xs font-medium space-x-1 sm:space-x-3 overflow-x-auto pb-1">
         <button
           onClick={() => setActiveTab('upload')}
           className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
             activeTab === 'upload'
               ? 'bg-sky-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
           }`}
         >
           <Upload className="w-4 h-4" />
@@ -320,7 +320,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
           className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
             activeTab === 'stock_overview'
               ? 'bg-sky-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
           }`}
         >
           <Package className="w-4 h-4" />
@@ -332,7 +332,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
           className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
             activeTab === 'transfers'
               ? 'bg-sky-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
           }`}
         >
           <ArrowRightLeft className="w-4 h-4" />
@@ -343,13 +343,13 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
       {/* TAB 1: UPLOAD MEDICAL LEDGER */}
       {activeTab === 'upload' && (
         <div className="space-y-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-600" />
                 Select Medical Ledger Upload Method
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-600">
                 Upload medicine sale data to central database. Gemini AI extracts medicine names, batch numbers, and sold quantities. Works offline if connectivity drops.
               </p>
             </div>
@@ -361,21 +361,21 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                 onClick={() => setUploadMethod('photo')}
                 className={`p-4 rounded-xl border text-left transition flex flex-col justify-between gap-3 ${
                   uploadMethod === 'photo'
-                    ? 'bg-sky-950/60 border-sky-500/80 text-white ring-1 ring-sky-500'
-                    : 'bg-slate-800/60 border-slate-700/80 text-slate-300 hover:bg-slate-800'
+                    ? 'bg-sky-50 border-sky-500/80 text-slate-900 ring-1 ring-sky-500'
+                    : 'bg-slate-100/60 border-slate-300/80 text-slate-700 hover:bg-slate-100'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <div className="w-9 h-9 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-lg bg-sky-500/20 text-sky-600 flex items-center justify-center">
                     <Camera className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700 text-slate-300">
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700 text-slate-700">
                     METHOD A
                   </span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-sm">Take / Upload Ledger Photo</h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <p className="text-[11px] text-slate-600 mt-0.5">
                     Capture paper register photo; Gemini vision reads handwritten rows.
                   </p>
                 </div>
@@ -386,21 +386,21 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                 onClick={() => setUploadMethod('excel')}
                 className={`p-4 rounded-xl border text-left transition flex flex-col justify-between gap-3 ${
                   uploadMethod === 'excel'
-                    ? 'bg-emerald-950/60 border-emerald-500/80 text-white ring-1 ring-emerald-500'
-                    : 'bg-slate-800/60 border-slate-700/80 text-slate-300 hover:bg-slate-800'
+                    ? 'bg-emerald-50 border-emerald-500/80 text-slate-900 ring-1 ring-emerald-500'
+                    : 'bg-slate-100/60 border-slate-300/80 text-slate-700 hover:bg-slate-100'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <div className="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-600 flex items-center justify-center">
                     <FileSpreadsheet className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700 text-slate-300">
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700 text-slate-700">
                     METHOD B
                   </span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-sm">Upload Excel / CSV</h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <p className="text-[11px] text-slate-600 mt-0.5">
                     Direct .xlsx, .xls or .csv upload or structured table paste.
                   </p>
                 </div>
@@ -411,21 +411,21 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                 onClick={() => setUploadMethod('barcode_scanner')}
                 className={`p-4 rounded-xl border text-left transition flex flex-col justify-between gap-3 ${
                   uploadMethod === 'barcode_scanner'
-                    ? 'bg-amber-950/60 border-amber-500/80 text-white ring-1 ring-amber-500'
-                    : 'bg-slate-800/60 border-slate-700/80 text-slate-300 hover:bg-slate-800'
+                    ? 'bg-amber-50 border-amber-500/80 text-slate-900 ring-1 ring-amber-500'
+                    : 'bg-slate-100/60 border-slate-300/80 text-slate-700 hover:bg-slate-100'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <div className="w-9 h-9 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-lg bg-amber-500/20 text-amber-600 flex items-center justify-center">
                     <ScanBarcode className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700 text-slate-300">
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700 text-slate-700">
                     METHOD C
                   </span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-sm">Direct Phone Scanner</h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <p className="text-[11px] text-slate-600 mt-0.5">
                     Scan medicine packaging / barcode directly from phone camera.
                   </p>
                 </div>
@@ -433,38 +433,38 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
             </div>
 
             {/* Upload Area Body Based on Selected Method */}
-            <div className="pt-3 border-t border-slate-800">
+            <div className="pt-3 border-t border-slate-200">
               {uploadMethod === 'photo' && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-slate-300">
+                    <span className="text-xs font-medium text-slate-700">
                       Upload or Photograph Ledger Paper Sheet:
                     </span>
                     <button
                       id="btn-sample-photo-ledger"
                       onClick={loadSamplePhotoLedger}
-                      className="text-xs text-sky-400 hover:text-sky-300 underline font-medium"
+                      className="text-xs text-sky-600 hover:text-sky-700 underline font-medium"
                     >
                       Load Sample Handwritten Register Photo
                     </button>
                   </div>
 
-                  <div className="border-2 border-dashed border-slate-700 hover:border-slate-500 rounded-2xl p-6 text-center bg-slate-950/50 transition">
+                  <div className="border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-2xl p-6 text-center bg-white/50 transition">
                     {photoPreview ? (
                       <div className="space-y-3">
                         <img
                           src={photoPreview}
                           alt="Ledger Preview"
-                          className="max-h-64 mx-auto rounded-lg border border-slate-700 shadow-md object-contain"
+                          className="max-h-64 mx-auto rounded-lg border border-slate-300 shadow-md object-contain"
                         />
                         <div className="flex items-center justify-center gap-3">
                           <button
                             onClick={() => setPhotoPreview(null)}
-                            className="text-xs text-rose-400 hover:underline"
+                            className="text-xs text-rose-600 hover:underline"
                           >
                             Remove Photo
                           </button>
-                          <label className="text-xs text-sky-400 hover:underline cursor-pointer">
+                          <label className="text-xs text-sky-600 hover:underline cursor-pointer">
                             Choose Different Image
                             <input
                               type="file"
@@ -479,7 +479,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                       <div className="space-y-3">
                         <Camera className="w-10 h-10 text-slate-500 mx-auto" />
                         <div>
-                          <p className="text-sm font-medium text-slate-300">
+                          <p className="text-sm font-medium text-slate-700">
                             Click to upload or take photo of ledger register
                           </p>
                           <p className="text-xs text-slate-500 mt-1">
@@ -510,22 +510,22 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
               {uploadMethod === 'excel' && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-slate-300">
+                    <span className="text-xs font-medium text-slate-700">
                       Upload Excel Spreadsheet (.xlsx / .xls) or CSV:
                     </span>
                     <button
                       id="btn-sample-excel-data"
                       onClick={loadSampleExcelData}
-                      className="text-xs text-emerald-400 hover:text-emerald-300 underline font-medium"
+                      className="text-xs text-emerald-600 hover:text-emerald-700 underline font-medium"
                     >
                       Load Standard NHM Excel Template
                     </button>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border-2 border-dashed border-slate-700 rounded-xl p-5 text-center bg-slate-950/40 flex flex-col justify-center items-center">
-                      <FileSpreadsheet className="w-10 h-10 text-emerald-400 mb-2" />
-                      <p className="text-xs text-slate-300 font-medium">
+                    <div className="border-2 border-dashed border-slate-300 rounded-xl p-5 text-center bg-white/40 flex flex-col justify-center items-center">
+                      <FileSpreadsheet className="w-10 h-10 text-emerald-600 mb-2" />
+                      <p className="text-xs text-slate-700 font-medium">
                         Drag & Drop or Choose Excel (.xlsx/.xls) File
                       </p>
                       <button
@@ -544,7 +544,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                     </div>
 
                     <div>
-                      <label className="text-xs text-slate-400 mb-1 block">
+                      <label className="text-xs text-slate-600 mb-1 block">
                         Direct CSV or Pasted Table Preview:
                       </label>
                       <textarea
@@ -552,7 +552,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                         onChange={(e) => setExcelText(e.target.value)}
                         placeholder="Paste CSV text here or upload file..."
                         rows={6}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500"
                       />
                     </div>
                   </div>
@@ -562,42 +562,42 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
               {uploadMethod === 'barcode_scanner' && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-slate-300">
+                    <span className="text-xs font-medium text-slate-700">
                       Medicine Strip Barcode / Packaging OCR Scanner:
                     </span>
-                    <span className="text-[11px] text-amber-400">
+                    <span className="text-[11px] text-amber-600">
                       Works on mobile camera & laser scanners
                     </span>
                   </div>
 
-                  <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+                  <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-4">
                     <div className="flex flex-col sm:flex-row gap-3">
                       <div className="relative flex-1">
-                        <ScanBarcode className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                        <ScanBarcode className="w-4 h-4 text-slate-600 absolute left-3 top-3" />
                         <input
                           type="text"
                           value={barcodeInput}
                           onChange={(e) => setBarcodeInput(e.target.value)}
                           placeholder="Scan or enter Barcode/Batch (e.g. 8901117220042)..."
-                          className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                          className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-900 placeholder-slate-500 focus:outline-none focus:border-amber-500"
                         />
                       </div>
                       <button
                         onClick={() => loadSampleMedicineBarcode('8901117220042 - Paracetamol 500mg IP (Batch PCM-25A-102)')}
-                        className="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-amber-300 border border-slate-700 whitespace-nowrap"
+                        className="px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-700 text-xs text-amber-700 border border-slate-300 whitespace-nowrap"
                       >
                         Sample Barcode: Paracetamol 500mg
                       </button>
                       <button
                         onClick={() => loadSampleMedicineBarcode('8901234567890 - ORS Sachet 20.5g (Batch ORS-24D-89)')}
-                        className="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-amber-300 border border-slate-700 whitespace-nowrap"
+                        className="px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-700 text-xs text-amber-700 border border-slate-300 whitespace-nowrap"
                       >
                         Sample Barcode: ORS IP
                       </button>
                     </div>
 
-                    <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-xs text-slate-400 flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <div className="p-3 bg-slate-50/60 rounded-xl border border-slate-200 text-xs text-slate-600 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                       <span>Barcode scanning directly decodes medicine GTIN, batch code, expiry, and links dispensing record to Store ID: {userSession.storeId}.</span>
                     </div>
                   </div>
@@ -606,10 +606,10 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
             </div>
 
             {/* Action Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
-              <div className="text-xs text-slate-400 flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200">
+              <div className="text-xs text-slate-600 flex items-center gap-1.5">
                 {!OfflineSyncManager.isOnline() && (
-                  <span className="text-amber-400 flex items-center gap-1 font-medium">
+                  <span className="text-amber-600 flex items-center gap-1 font-medium">
                     <WifiOff className="w-3.5 h-3.5" /> Offline mode active: will queue locally with device timestamp
                   </span>
                 )}
@@ -619,7 +619,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                 id="btn-run-gemini-extract"
                 onClick={handleExtractLedger}
                 disabled={isExtracting || (uploadMethod === 'photo' && !photoPreview) || (uploadMethod === 'excel' && !excelText) || (uploadMethod === 'barcode_scanner' && !barcodeInput)}
-                className="px-5 py-2.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transition cursor-pointer"
+                className="px-5 py-2.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 disabled:opacity-50 text-slate-900 rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transition cursor-pointer"
               >
                 {isExtracting ? (
                   <>
@@ -628,7 +628,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <Sparkles className="w-4 h-4 text-amber-700" />
                     <span>Run Gemini AI Extraction & Commit to Central DB</span>
                   </>
                 )}
@@ -640,16 +640,16 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
               <div
                 className={`p-3.5 rounded-xl text-xs flex items-center gap-2.5 ${
                   feedbackMessage.type === 'success'
-                    ? 'bg-emerald-950/60 border border-emerald-800 text-emerald-200'
+                    ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
                     : feedbackMessage.type === 'warning'
-                    ? 'bg-amber-950/60 border border-amber-800 text-amber-200'
-                    : 'bg-rose-950/60 border border-rose-800 text-rose-200'
+                    ? 'bg-amber-50 border border-amber-200 text-amber-800'
+                    : 'bg-rose-50 border border-rose-200 text-rose-800'
                 }`}
               >
                 {feedbackMessage.type === 'success' ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                 ) : (
-                  <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                  <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                 )}
                 <span>{feedbackMessage.text}</span>
               </div>
@@ -658,20 +658,20 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
 
           {/* Extracted Structured Records Preview (Instant Verification) */}
           {extractedPreview && extractedPreview.length > 0 && (
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   Newly Extracted & Structured Medical Records ({extractedPreview.length})
                 </h4>
-                <span className="text-[11px] text-slate-400">
-                  Linked to Store: <strong>{userSession.storeId}</strong> | MOIC: <strong>{userSession.inchargeId}</strong>
+                <span className="text-[11px] text-slate-600">
+                  Linked to Store: <strong>{userSession.storeId}</strong> | PHC ID: <strong>{userSession.inchargeId}</strong>
                 </span>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs text-slate-300">
-                  <thead className="bg-slate-950 text-slate-400 text-[11px] uppercase border-b border-slate-800">
+                <table className="w-full text-left text-xs text-slate-700">
+                  <thead className="bg-white text-slate-600 text-[11px] uppercase border-b border-slate-200">
                     <tr>
                       <th className="p-2.5">Medicine Name</th>
                       <th className="p-2.5">Batch</th>
@@ -683,14 +683,14 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                   </thead>
                   <tbody className="divide-y divide-slate-800/60">
                     {extractedPreview.map((item) => (
-                      <tr key={item.id} className="hover:bg-slate-800/40">
-                        <td className="p-2.5 font-medium text-white">{item.medicineName}</td>
-                        <td className="p-2.5 font-mono text-slate-400">{item.batchNumber}</td>
-                        <td className="p-2.5 font-bold text-emerald-400">-{item.quantitySold}</td>
-                        <td className="p-2.5 text-slate-400">{item.dosage}</td>
-                        <td className="p-2.5 text-slate-400 font-mono">{item.patientToken || 'OPD-REG'}</td>
+                      <tr key={item.id} className="hover:bg-slate-100/40">
+                        <td className="p-2.5 font-medium text-slate-900">{item.medicineName}</td>
+                        <td className="p-2.5 font-mono text-slate-600">{item.batchNumber}</td>
+                        <td className="p-2.5 font-bold text-emerald-600">-{item.quantitySold}</td>
+                        <td className="p-2.5 text-slate-600">{item.dosage}</td>
+                        <td className="p-2.5 text-slate-600 font-mono">{item.patientToken || 'OPD-REG'}</td>
                         <td className="p-2.5">
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
                             Verified Central DB
                           </span>
                         </td>
@@ -708,19 +708,19 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
       {activeTab === 'stock_overview' && (
         <div className="space-y-4">
           {/* Search and Filters */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+              <Search className="w-4 h-4 text-slate-600 absolute left-3 top-2.5" />
               <input
                 type="text"
                 value={stockSearchQuery}
                 onChange={(e) => setStockSearchQuery(e.target.value)}
                 placeholder="Search medicines or categories..."
-                className="w-full pl-9 pr-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                className="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 placeholder-slate-500 focus:outline-none focus:border-sky-500"
               />
             </div>
 
-            <div className="text-xs text-slate-400 flex items-center gap-3">
+            <div className="text-xs text-slate-600 flex items-center gap-3">
               <span className="flex items-center gap-1">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Critical Shortage
               </span>
@@ -737,51 +737,51 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
               return (
                 <div
                   key={item.id}
-                  className={`bg-slate-900 border rounded-2xl p-4 space-y-3 transition ${
-                    isCritical ? 'border-rose-800/80 bg-rose-950/20' : 'border-slate-800'
+                  className={`bg-slate-50 border rounded-2xl p-4 space-y-3 transition ${
+                    isCritical ? 'border-rose-200 bg-rose-50' : 'border-slate-200'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700">
                         {item.category}
                       </span>
-                      <h4 className="font-bold text-sm text-white mt-1">{item.medicineName}</h4>
-                      <p className="text-[11px] text-slate-400">{item.genericName}</p>
+                      <h4 className="font-bold text-sm text-slate-900 mt-1">{item.medicineName}</h4>
+                      <p className="text-[11px] text-slate-600">{item.genericName}</p>
                     </div>
                     {isCritical && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40 animate-pulse">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-600 border border-rose-500/40 animate-pulse">
                         LOW STOCK
                       </span>
                     )}
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80 text-center">
+                  <div className="grid grid-cols-3 gap-2 bg-white/60 p-2.5 rounded-xl border border-slate-200/80 text-center">
                     <div>
-                      <div className="text-[10px] text-slate-400">Available</div>
-                      <div className={`text-base font-bold ${isCritical ? 'text-rose-400' : 'text-emerald-400'}`}>
+                      <div className="text-[10px] text-slate-600">Available</div>
+                      <div className={`text-base font-bold ${isCritical ? 'text-rose-600' : 'text-emerald-600'}`}>
                         {item.availableStock}
                       </div>
                       <div className="text-[9px] text-slate-500">{item.unit}</div>
                     </div>
                     <div>
-                      <div className="text-[10px] text-slate-400">Sold/Dispensed</div>
-                      <div className="text-base font-bold text-slate-200">
+                      <div className="text-[10px] text-slate-600">Sold/Dispensed</div>
+                      <div className="text-base font-bold text-slate-800">
                         {item.soldStock}
                       </div>
                       <div className="text-[9px] text-slate-500">{item.unit}</div>
                     </div>
                     <div>
-                      <div className="text-[10px] text-slate-400">Delivered</div>
-                      <div className="text-base font-bold text-sky-400">
+                      <div className="text-[10px] text-slate-600">Delivered</div>
+                      <div className="text-base font-bold text-sky-600">
                         {item.deliveredStock}
                       </div>
                       <div className="text-[9px] text-slate-500">{item.unit}</div>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-                    <span>Batch: <strong className="text-slate-300 font-mono">{item.batchNumber}</strong></span>
+                  <div className="flex items-center justify-between text-[11px] text-slate-600 pt-1">
+                    <span>Batch: <strong className="text-slate-700 font-mono">{item.batchNumber}</strong></span>
                     <span>Safety Buffer: {item.criticalThreshold}</span>
                   </div>
                 </div>
@@ -794,14 +794,14 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
       {/* TAB 4: UCP ORDERS & AI DIRECTED TRANSFERS */}
       {activeTab === 'transfers' && (
         <div className="space-y-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-sky-400" />
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-sky-600" />
                   Unified Central Procurement (UCP) & Inter-PHC Reallocations
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-600">
                   View medicines ordered through UCP, incoming stock dispatches, and stocks scheduled to be sent to neighboring PHCs as directed by AI.
                 </p>
               </div>
@@ -814,13 +814,13 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
             </div>
 
             {showDemandList && (
-               <div className="bg-slate-950 p-4 border border-purple-500/30 rounded-xl shadow-lg shadow-purple-900/10">
-                 <h4 className="font-bold text-purple-300 text-sm mb-3">Predicted Restock Demand (Below Critical Buffer)</h4>
+               <div className="bg-white p-4 border border-purple-500/30 rounded-xl shadow-lg shadow-purple-900/10">
+                 <h4 className="font-bold text-purple-700 text-sm mb-3">Predicted Restock Demand (Below Critical Buffer)</h4>
                  <div className="space-y-2">
                    {stocks.filter(s => s.availableStock <= s.criticalThreshold).map(s => (
-                     <div key={s.id} className="flex justify-between items-center bg-slate-900 p-2 rounded border border-slate-800 text-xs text-slate-300">
+                     <div key={s.id} className="flex justify-between items-center bg-slate-50 p-2 rounded border border-slate-200 text-xs text-slate-700">
                        <span>{s.medicineName}</span>
-                       <span className="font-bold text-amber-400">Demand: {Math.max(10, s.criticalThreshold * 2 - s.availableStock)} {s.unit}</span>
+                       <span className="font-bold text-amber-600">Demand: {Math.max(10, s.criticalThreshold * 2 - s.availableStock)} {s.unit}</span>
                      </div>
                    ))}
                    {stocks.filter(s => s.availableStock <= s.criticalThreshold).length === 0 && (
@@ -839,7 +839,7 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
             )}
 
             {demandApproved && (
-              <div className="p-3 bg-emerald-950/40 border border-emerald-800 rounded-lg text-emerald-400 text-xs mb-2 flex items-center gap-2">
+              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-600 text-xs mb-2 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> Demand List approved and forwarded to District Medical Officer.
               </div>
             )}
@@ -848,31 +848,31 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
               {[...transfers.incoming, ...transfers.outgoing].map((trf) => (
                 <div
                   key={trf.id}
-                  className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                         trf.type === 'AI_REDISTRIBUTION'
-                          ? 'bg-purple-500/10 text-purple-300 border-purple-500/30'
-                          : 'bg-sky-500/10 text-sky-300 border-sky-500/30'
+                          ? 'bg-purple-500/10 text-purple-700 border-purple-500/30'
+                          : 'bg-sky-500/10 text-sky-700 border-sky-500/30'
                       }`}>
                         {trf.type === 'AI_REDISTRIBUTION' ? 'AI-Directed Inter-PHC Transfer' : 'UCP Procurement Order'}
                       </span>
-                      <span className="text-xs font-mono text-slate-400">{trf.id}</span>
+                      <span className="text-xs font-mono text-slate-600">{trf.id}</span>
                     </div>
 
-                    <h4 className="font-bold text-sm text-white">
+                    <h4 className="font-bold text-sm text-slate-900">
                       {trf.medicineName} • {trf.quantity} {trf.unit}
                     </h4>
 
-                    <div className="text-xs text-slate-400 flex items-center gap-1.5 flex-wrap">
+                    <div className="text-xs text-slate-600 flex items-center gap-1.5 flex-wrap">
                       <span>From: <strong>{trf.fromFacilityName}</strong></span>
                       <span>➔</span>
                       <span>To: <strong>{trf.toFacilityName}</strong></span>
                     </div>
 
-                    <p className="text-[11px] text-slate-400 italic pt-1">
+                    <p className="text-[11px] text-slate-600 italic pt-1">
                       {trf.reason}
                     </p>
                   </div>
@@ -880,10 +880,10 @@ Azithromycin Tablets IP 500mg,Azithromycin IP,AZI-25C-77,20,Tablets,OD for 3 day
                   <div className="flex flex-col sm:items-end gap-2 shrink-0">
                     <span className={`text-[10px] font-bold px-2.5 py-1 rounded-lg ${
                       trf.status === 'DELIVERED'
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                        ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/30'
                         : trf.status === 'DISPATCHED'
-                        ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30 animate-pulse'
-                        : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        ? 'bg-sky-500/20 text-sky-700 border border-sky-500/30 animate-pulse'
+                        : 'bg-amber-500/20 text-amber-700 border border-amber-500/30'
                     }`}>
                       {trf.status}
                     </span>

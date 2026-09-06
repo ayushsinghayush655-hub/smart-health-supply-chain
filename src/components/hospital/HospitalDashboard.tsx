@@ -140,7 +140,7 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
 
   if (isLoading || !hospital) {
     return (
-      <div className="flex items-center justify-center p-12 text-slate-400">
+      <div className="flex items-center justify-center p-12 text-slate-600">
         <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -152,24 +152,24 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
   return (
     <div className="space-y-6">
       {/* Hospital Identity & Attendance Clock Card */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
+              <span className="text-xs font-semibold px-2 py-0.5 rounded bg-sky-500/10 text-sky-600 border border-sky-500/20">
                 GOVERNMENT SECONDARY/TERTIARY HEALTHCARE
               </span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-slate-600 font-mono">
                 HOSPITAL ID: {hospital.id}
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
               {hospital.name}
-              <span className="text-xs font-normal px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+              <span className="text-xs font-normal px-2 py-0.5 rounded bg-slate-100 text-slate-700">
                 {hospital.type}
               </span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600">
               Live Clinical Ward Surveillance, Emergency Triage, Real-time Bed Count Synchronization with District Medical Officer.
             </p>
           </div>
@@ -177,24 +177,24 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
           {/* Hospital Staff Attendance Compliance Card (Same system as PHC) */}
           <div className={`p-4 rounded-xl border flex items-center justify-between gap-4 ${
             attendanceStatus.isOverdue
-              ? 'bg-rose-950/40 border-rose-800 text-rose-300'
+              ? 'bg-rose-50 border-rose-200 text-rose-700'
               : attendanceStatus.isDue
-              ? 'bg-amber-950/40 border-amber-800 text-amber-300'
-              : 'bg-slate-800/80 border-slate-700 text-slate-300'
+              ? 'bg-amber-50 border-amber-200 text-amber-700'
+              : 'bg-slate-100/80 border-slate-300 text-slate-700'
           }`}>
             <div className="space-y-0.5">
               <div className="text-[11px] font-semibold flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-sky-400" />
+                <Clock className="w-3.5 h-3.5 text-sky-600" />
                 <span>Duty Medical Attendance (240m Urban)</span>
               </div>
               <div className="text-lg font-mono font-bold">
                 {attendanceStatus.isOverdue ? (
-                  <span className="text-rose-400 animate-pulse">ATTENDANCE DUE NOW</span>
+                  <span className="text-rose-600 animate-pulse">ATTENDANCE DUE NOW</span>
                 ) : (
                   <span>{attendanceStatus.minutesRemaining}m {attendanceStatus.secondsRemaining}s remaining</span>
                 )}
               </div>
-              <div className="text-[10px] text-slate-400">
+              <div className="text-[10px] text-slate-600">
                 Next required by: {attendanceStatus.nextDueAt} (Internal Clock)
               </div>
             </div>
@@ -212,54 +212,54 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
 
       {/* Real-Time Live Bed Count Matrix */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>Total Bed Capacity</span>
-            <Bed className="w-4 h-4 text-sky-400" />
+            <Bed className="w-4 h-4 text-sky-600" />
           </div>
-          <div className="text-2xl font-bold text-white mt-1">
+          <div className="text-2xl font-bold text-slate-900 mt-1">
             {hospital.totalBeds}
           </div>
-          <div className="text-[11px] text-emerald-400 mt-0.5 font-medium">
+          <div className="text-[11px] text-emerald-600 mt-0.5 font-medium">
             {availableBeds} Currently Vacant & Ready
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>Occupied Beds</span>
-            <Users className="w-4 h-4 text-amber-400" />
+            <Users className="w-4 h-4 text-amber-600" />
           </div>
-          <div className="text-2xl font-bold text-amber-400 mt-1">
+          <div className="text-2xl font-bold text-amber-600 mt-1">
             {hospital.occupiedBeds} ({bedOccupancyRate}%)
           </div>
-          <div className="text-[11px] text-slate-400 mt-0.5">
+          <div className="text-[11px] text-slate-600 mt-0.5">
             Real-time feed to DMO Map
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>ICU Bed Availability</span>
-            <HeartPulse className="w-4 h-4 text-rose-400" />
+            <HeartPulse className="w-4 h-4 text-rose-600" />
           </div>
-          <div className="text-2xl font-bold text-rose-400 mt-1">
+          <div className="text-2xl font-bold text-rose-600 mt-1">
             {hospital.icuOccupied} / {hospital.icuBeds}
           </div>
-          <div className="text-[11px] text-slate-400 mt-0.5">
+          <div className="text-[11px] text-slate-600 mt-0.5">
             {hospital.icuBeds - hospital.icuOccupied} Critical Care Beds Left
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>Specialist Attendance</span>
-            <Stethoscope className="w-4 h-4 text-emerald-400" />
+            <Stethoscope className="w-4 h-4 text-emerald-600" />
           </div>
-          <div className="text-2xl font-bold text-emerald-400 mt-1">
+          <div className="text-2xl font-bold text-emerald-600 mt-1">
             {hospital.specialistRate}%
           </div>
-          <div className="text-[11px] text-slate-400 mt-0.5">
+          <div className="text-[11px] text-slate-600 mt-0.5">
             {hospital.emergencyResponseMinutes} min Emergency Response Time
           </div>
         </div>
@@ -268,20 +268,20 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
       {/* Main Two-Column Layout: Patient Admission Desk + Live Ward Registry */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Column 1: Real-Time Patient Admission Desk Form */}
-        <div className="lg:col-span-1 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div className="lg:col-span-1 bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <UserPlus className="w-4 h-4 text-sky-400" />
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <UserPlus className="w-4 h-4 text-sky-600" />
               Real-Time Patient Admission Desk
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600">
               Admit incoming patients. Bed availability updates instantaneously in the central database and on DMO maps.
             </p>
           </div>
 
           <form onSubmit={handleAdmitPatient} className="space-y-3.5">
             <div>
-              <label className="text-xs text-slate-300 font-medium block mb-1">
+              <label className="text-xs text-slate-700 font-medium block mb-1">
                 Patient Full Name *
               </label>
               <input
@@ -290,13 +290,13 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
                 value={patientName}
                 onChange={(e) => setPatientName(e.target.value)}
                 placeholder="e.g. Ram Charan"
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 placeholder-slate-500 focus:outline-none focus:border-sky-500"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-slate-300 font-medium block mb-1">
+                <label className="text-xs text-slate-700 font-medium block mb-1">
                   Age *
                 </label>
                 <input
@@ -307,18 +307,18 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
                   placeholder="e.g. 42"
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-slate-300 font-medium block mb-1">
+                <label className="text-xs text-slate-700 font-medium block mb-1">
                   Gender
                 </label>
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -328,13 +328,13 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
             </div>
 
             <div>
-              <label className="text-xs text-slate-300 font-medium block mb-1">
+              <label className="text-xs text-slate-700 font-medium block mb-1">
                 Clinical Triage Category
               </label>
               <select
                 value={triagePriority}
                 onChange={(e) => setTriagePriority(e.target.value as any)}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500"
               >
                 <option value="RED_CRITICAL">🔴 RED - Resuscitation / Critical (Immediate Bed)</option>
                 <option value="YELLOW_URGENT">🟡 YELLOW - Urgent / Inpatient Admission</option>
@@ -343,13 +343,13 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
             </div>
 
             <div>
-              <label className="text-xs text-slate-300 font-medium block mb-1">
+              <label className="text-xs text-slate-700 font-medium block mb-1">
                 Admitting Department & Ward
               </label>
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value as any)}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500"
               >
                 <option value="General Medicine">General Medicine Ward</option>
                 <option value="Infectious Diseases">Infectious Diseases & Epidemic Isolation</option>
@@ -361,14 +361,14 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
             </div>
 
             <div>
-              <label className="text-xs text-slate-300 font-medium block mb-1">
+              <label className="text-xs text-slate-700 font-medium block mb-1">
                 Attending Specialist
               </label>
               <input
                 type="text"
                 value={attendingDoctor}
                 onChange={(e) => setAttendingDoctor(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-sky-500"
               />
             </div>
 
@@ -382,8 +382,8 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
             </button>
 
             {admissionSuccessNotice && (
-              <div className="p-3 rounded-lg bg-emerald-950/80 border border-emerald-700 text-emerald-200 text-xs flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>{admissionSuccessNotice}</span>
               </div>
             )}
@@ -391,28 +391,28 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
         </div>
 
         {/* Column 2: Live Inpatient Admissions Table & Real-Time Sync */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div className="lg:col-span-2 bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Activity className="w-4 h-4 text-emerald-400" />
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Activity className="w-4 h-4 text-emerald-600" />
                 Live Inpatient Ward Admissions ({admissions.filter((a) => a.status === 'ADMITTED').length} Active)
               </h3>
-              <p className="text-xs text-slate-400">
-                Data streams in real-time to the District Medical Officer (DMO) and Med-PaLM predictive logistics model.
+              <p className="text-xs text-slate-600">
+                Data streams in real-time to the District Medical Officer (DMO) and Gemini predictive logistics model.
               </p>
             </div>
             <button
               onClick={onOpenMedPalm}
-              className="text-xs text-indigo-300 hover:text-indigo-200 flex items-center gap-1 font-medium underline"
+              className="text-xs text-indigo-700 hover:text-indigo-800 flex items-center gap-1 font-medium underline"
             >
-              <Sparkles className="w-3.5 h-3.5" /> View Med-PaLM Logistics Impact
+              <Sparkles className="w-3.5 h-3.5" /> View Gemini Logistics Impact
             </button>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 text-[11px] uppercase border-b border-slate-800">
+            <table className="w-full text-left text-xs text-slate-700">
+              <thead className="bg-white text-slate-600 text-[11px] uppercase border-b border-slate-200">
                 <tr>
                   <th className="p-3">Patient Name</th>
                   <th className="p-3">Triage</th>
@@ -425,33 +425,33 @@ export const HospitalDashboard: React.FC<HospitalDashboardProps> = ({
               </thead>
               <tbody className="divide-y divide-slate-800">
                 {admissions.map((adm) => (
-                  <tr key={adm.id} className="hover:bg-slate-800/40">
+                  <tr key={adm.id} className="hover:bg-slate-100/40">
                     <td className="p-3">
-                      <div className="font-semibold text-white">{adm.patientName}</div>
-                      <div className="text-[10px] text-slate-400">{adm.age} yrs • {adm.gender}</div>
+                      <div className="font-semibold text-slate-900">{adm.patientName}</div>
+                      <div className="text-[10px] text-slate-600">{adm.age} yrs • {adm.gender}</div>
                     </td>
                     <td className="p-3">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                         adm.triagePriority === 'RED_CRITICAL'
-                          ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30 animate-pulse'
+                          ? 'bg-rose-500/20 text-rose-600 border border-rose-500/30 animate-pulse'
                           : adm.triagePriority === 'YELLOW_URGENT'
-                          ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                          : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                          ? 'bg-amber-500/20 text-amber-700 border border-amber-500/30'
+                          : 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/30'
                       }`}>
                         {adm.triagePriority === 'RED_CRITICAL' ? 'CRITICAL' : adm.triagePriority === 'YELLOW_URGENT' ? 'URGENT' : 'STABLE'}
                       </span>
                     </td>
-                    <td className="p-3 font-medium text-slate-200">{adm.department}</td>
-                    <td className="p-3 font-mono font-bold text-sky-400">{adm.bedNumber}</td>
-                    <td className="p-3 font-mono text-slate-400 text-[11px]">
+                    <td className="p-3 font-medium text-slate-800">{adm.department}</td>
+                    <td className="p-3 font-mono font-bold text-sky-600">{adm.bedNumber}</td>
+                    <td className="p-3 font-mono text-slate-600 text-[11px]">
                       {new Date(adm.admittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </td>
-                    <td className="p-3 text-slate-300 text-[11px]">{adm.attendingDoctor}</td>
+                    <td className="p-3 text-slate-700 text-[11px]">{adm.attendingDoctor}</td>
                     <td className="p-3">
                       {adm.status === 'ADMITTED' ? (
                         <button
                           onClick={() => handleDischargePatient(adm.id)}
-                          className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] transition"
+                          className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-700 text-slate-700 text-[11px] transition"
                         >
                           Discharge / Release
                         </button>

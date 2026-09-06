@@ -876,7 +876,7 @@ app.post('/api/gemini/extract-ledger', async (req, res) => {
   try {
     const ai = getGeminiClient();
 
-    let prompt = `You are the Med-PaLM Clinical Pharmacy & Ledger Parser for the Indian National Health Mission (NHM).
+    let prompt = `You are the Gemini Clinical Pharmacy & Ledger Parser for the Indian National Health Mission (NHM).
 Extract all medicine sale/dispensing records from the provided input (photo, excel/csv text, or barcode string).
 Return ONLY a valid JSON array of objects with this schema:
 [
@@ -909,7 +909,12 @@ No backticks, no markdown, just the raw JSON array. If data is partially incompl
           });
 
           const text = response.text || '[]';
-          const cleanJson = text.replace(/```json/g, '').replace(/```/g, '').trim();
+          let cleanJson = text.replace(/\s*```json/g, '').replace(/```/g, '').trim();
+          const firstBracket = cleanJson.indexOf('[');
+          const lastBracket = cleanJson.lastIndexOf(']');
+          if (firstBracket !== -1 && lastBracket !== -1) {
+            cleanJson = cleanJson.substring(firstBracket, lastBracket + 1);
+          }
           extractedData = JSON.parse(cleanJson);
           aiSuccess = true;
         } else {
@@ -920,7 +925,12 @@ No backticks, no markdown, just the raw JSON array. If data is partially incompl
           });
 
           const text = response.text || '[]';
-          const cleanJson = text.replace(/```json/g, '').replace(/```/g, '').trim();
+          let cleanJson = text.replace(/\s*```json/g, '').replace(/```/g, '').trim();
+          const firstBracket = cleanJson.indexOf('[');
+          const lastBracket = cleanJson.lastIndexOf(']');
+          if (firstBracket !== -1 && lastBracket !== -1) {
+            cleanJson = cleanJson.substring(firstBracket, lastBracket + 1);
+          }
           extractedData = JSON.parse(cleanJson);
           aiSuccess = true;
         }
@@ -1033,7 +1043,7 @@ app.post('/api/sync/offline-batch', (req, res) => {
   });
 });
 
-// POST Med-PaLM & Multi-Agency Intelligence Synthesis
+// POST Gemini & Multi-Agency Intelligence Synthesis
 // Evaluates Hospital Beds + PHC Ledger Spikes + CWC Flood + IMD Rain + NDMA Threats
 app.post('/api/gemini/epidemic-medpalm-analysis', async (req, res) => {
   try {
@@ -1046,8 +1056,14 @@ app.post('/api/gemini/epidemic-medpalm-analysis', async (req, res) => {
       icu: `${h.icuOccupied}/${h.icuBeds}`,
     }));
 
-    const prompt = `You are Med-PaLM 2 / Gemini Clinical Health Supply Logistics Model for the Ministry of Health and Family Welfare (MoHFW) India.
-Analyze the following active district intelligence:
+        const prompt = `You are a Gemini AI analyzing epidemic and healthcare supply logic.
+Please follow these exact steps to generate the analysis:
+1. Get the list of PHC (Primary Health Centres) in affected threat areas.
+2. See what type of problem (flood, disease, etc.) each area has based on the threat data.
+3. Based on that problem, determine the list of critical medicines required.
+4. Check the inventory of those PHCs and create a list of required medicines and their recommended quantities.
+
+Here is the data to analyze:
 1. Active Threats:
 ${JSON.stringify(outbreakThreats, null, 2)}
 2. Current Hospital Bed State:
@@ -1061,7 +1077,7 @@ ${JSON.stringify(
   2,
 )}
 
-Generate a structured JSON response with:
+Generate a structured JSON response exactly matching this schema:
 {
   "clinicalThreatSummary": string, // Executive clinical overview of the convergence of flood, rain, and hospital triage
   "requiredMedicines": [
@@ -1097,7 +1113,12 @@ Return ONLY valid raw JSON with no markdown formatting.`;
         });
 
         const text = response.text || '{}';
-        const cleanJson = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        let cleanJson = text.replace(/\s*```json/g, '').replace(/```/g, '').trim();
+        const firstBrace = cleanJson.indexOf('{');
+        const lastBrace = cleanJson.lastIndexOf('}');
+        if (firstBrace !== -1 && lastBrace !== -1) {
+          cleanJson = cleanJson.substring(firstBrace, lastBrace + 1);
+        }
         aiResult = JSON.parse(cleanJson);
         aiSuccess = true;
       } catch (e: any) {
@@ -1164,7 +1185,7 @@ Return ONLY valid raw JSON with no markdown formatting.`;
       analysis: aiResult,
     });
   } catch (error: any) {
-    console.error('Med-PaLM synthesis error:', error);
+    console.error('Gemini synthesis error:', error);
     res.status(500).json({ error: 'Failed to synthesize threat matrix', message: error?.message });
   }
 });

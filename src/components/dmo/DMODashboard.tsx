@@ -88,7 +88,7 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
 
   if (isLoading || !summaryData) {
     return (
-      <div className="flex items-center justify-center p-12 text-slate-400">
+      <div className="flex items-center justify-center p-12 text-slate-600">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
           <span className="text-xs font-medium">Loading District Command Intelligence...</span>
@@ -112,26 +112,26 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
   return (
     <div className="space-y-6">
       {/* Official Government of India Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-slate-700/80 rounded-2xl p-6 shadow-md relative overflow-hidden">
+      <div className="bg-gradient-to-r bg-white border border-slate-300/80 rounded-2xl p-6 shadow-md relative overflow-hidden">
         {/* Subtle Ashoka Emblem Watermark Accent */}
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none text-slate-100">
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none text-slate-900">
           <Shield className="w-64 h-64" />
         </div>
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-bold tracking-widest text-amber-400 px-2.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/30">
+              <span className="text-xs uppercase font-bold tracking-widest text-amber-600 px-2.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/30">
                 GOVERNMENT OF INDIA • STATE HEALTH SECRETARIAT
               </span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-slate-600 font-mono">
                 CODE: DMO-HQ-UP-24
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
               Office of the District Medical Officer (DMO)
             </h2>
-            <p className="text-xs text-slate-300 max-w-3xl leading-relaxed">
+            <p className="text-xs text-slate-700 max-w-3xl leading-relaxed">
               Unified surveillance portal for Kanpur District. Centralized inventory monitoring of all Primary Health Centres, real-time hospital bed allocations, multi-agency threat correlation, and automated stock redistribution.
             </p>
           </div>
@@ -139,17 +139,17 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
           {/* Quick AI Synthesizer Action */}
           <button
             onClick={onOpenMedPalm}
-            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg flex items-center gap-2 shrink-0 transition"
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-slate-900 font-bold text-xs shadow-lg flex items-center gap-2 shrink-0 transition"
           >
-            <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>Launch Med-PaLM Threat Matrix</span>
+            <Sparkles className="w-4 h-4 text-amber-700" />
+            <span>Launch Gemini Threat Matrix</span>
           </button>
         </div>
 
         {/* Action Notice Alert */}
         {actionNotice && (
-          <div className="mt-4 p-3 rounded-xl bg-emerald-950/80 border border-emerald-700 text-emerald-200 text-xs flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <div className="mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>{actionNotice}</span>
           </div>
         )}
@@ -157,24 +157,29 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
 
       {/* Multi-Agency Alert Bar (CWC, IMD, NDMA, Epidemiology) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {outbreakThreats.map((threat) => (
+        {outbreakThreats.map((threat, index) => (
           <div
             key={threat.id}
+            style={{
+              ...(index === 0 && { backgroundColor: '#ffffff', color: '#0d0c0c' }),
+              ...(index === 1 && { color: '#101010', backgroundColor: '#ffffff' }),
+              ...(index === 2 && { color: '#0e0e0e', backgroundColor: '#ffffff' }),
+            }}
             className={`p-3.5 rounded-xl border flex items-start gap-3 transition ${
               threat.severity === 'CRITICAL'
-                ? 'bg-rose-950/40 border-rose-800/80 text-rose-200'
+                ? 'bg-rose-50 border-rose-200 text-rose-800'
                 : threat.severity === 'HIGH'
-                ? 'bg-amber-950/40 border-amber-800/80 text-amber-200'
-                : 'bg-slate-900 border-slate-800 text-slate-300'
+                ? 'bg-amber-50 border-amber-200 text-amber-800'
+                : 'bg-slate-50 border-slate-200 text-slate-700'
             }`}
           >
             <div className="mt-0.5">
               {threat.threatType === 'FLOOD' ? (
-                <Waves className="w-4 h-4 text-rose-400" />
+                <Waves className="w-4 h-4 text-rose-600" />
               ) : threat.threatType === 'HEAVY_RAINFALL' ? (
-                <CloudRain className="w-4 h-4 text-amber-400" />
+                <CloudRain className="w-4 h-4 text-amber-600" />
               ) : (
-                <Activity className="w-4 h-4 text-purple-400" />
+                <Activity className="w-4 h-4 text-purple-600" />
               )}
             </div>
             <div className="space-y-0.5 text-xs">
@@ -186,7 +191,7 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
                   {threat.severity}
                 </span>
               </div>
-              <p className="text-[11px] leading-snug ">
+              <p className="text-[11px] leading-snug " style={index === 0 ? { borderColor: '#ffffcc', backgroundColor: '#ffffff', color: '#181717' } : undefined}>
                 {threat.description}
               </p>
             </div>
@@ -196,28 +201,28 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
 
       {/* Core District Statistics Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>Primary Health Centres</span>
-            <Stethoscope className="w-4 h-4 text-emerald-400" />
+            <Stethoscope className="w-4 h-4 text-emerald-600" />
           </div>
-          <div className="text-2xl font-bold text-white mt-1">
+          <div className="text-2xl font-bold text-slate-900 mt-1">
             {metrics.totalPHCs}
           </div>
-          <div className="text-[11px] text-slate-400 mt-0.5">
+          <div className="text-[11px] text-slate-600 mt-0.5">
             {metrics.ruralPHCs} Rural • {metrics.urbanPHCs} Urban
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>Critical Drug Shortages</span>
-            <AlertTriangle className="w-4 h-4 text-rose-400" />
+            <AlertTriangle className="w-4 h-4 text-rose-600" />
           </div>
-          <div className="text-2xl font-bold text-rose-400 mt-1">
+          <div className="text-2xl font-bold text-rose-600 mt-1">
             {metrics.criticalShortages} Alerts
           </div>
-          <div className="text-[11px] text-slate-400 mt-0.5 ">
+          <div className="text-[11px] text-slate-600 mt-0.5 ">
             {medicineStocks.filter((s) => s.availableStock <= s.criticalThreshold)
               .map(s => {
                 const phcName = phcs.find(p => p.id === s.phcId)?.name || 'Facility';
@@ -226,41 +231,41 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>Hospital Bed Occupancy</span>
-            <Bed className="w-4 h-4 text-sky-400" />
+            <Bed className="w-4 h-4 text-sky-600" />
           </div>
-          <div className="text-2xl font-bold text-white mt-1">
+          <div className="text-2xl font-bold text-slate-900 mt-1">
             {metrics.occupiedBeds} / {metrics.totalBeds}
           </div>
-          <div className="text-[11px] text-slate-400 mt-0.5 ">
+          <div className="text-[11px] text-slate-600 mt-0.5 ">
             {hospitals.map(h => `${h.name}: ${h.occupiedBeds}/${h.totalBeds}`).join(' • ')}
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <div className="text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+          <div className="text-xs text-slate-600 flex items-center justify-between">
             <span>Pending Reallocations</span>
-            <ArrowRightLeft className="w-4 h-4 text-purple-400" />
+            <ArrowRightLeft className="w-4 h-4 text-purple-600" />
           </div>
-          <div className="text-2xl font-bold text-purple-400 mt-1">
+          <div className="text-2xl font-bold text-purple-600 mt-1">
             {metrics.pendingTransfers} Orders
           </div>
-          <div className="text-[11px] text-slate-400 mt-0.5">
+          <div className="text-[11px] text-slate-600 mt-0.5">
             AI-directed stock re-supplies
           </div>
         </div>
       </div>
 
       {/* Main Tabs Navigation */}
-      <div className="flex border-b border-slate-800 text-xs font-medium space-x-1 sm:space-x-3 overflow-x-auto pb-1">
+      <div className="flex border-b border-slate-200 text-xs font-medium space-x-1 sm:space-x-3 overflow-x-auto pb-1">
         <button
           onClick={() => setActiveTab('map_overview')}
           className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
             activeTab === 'map_overview'
               ? 'bg-amber-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
           }`}
         >
           <Layers className="w-4 h-4" />
@@ -272,7 +277,7 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
           className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
             activeTab === 'stock_matrix'
               ? 'bg-amber-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
           }`}
         >
           <Package className="w-4 h-4" />
@@ -280,27 +285,27 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
         </button>
 
         <button
-          onClick={() => setActiveTab('transfers_ucp')}
-          className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
-            activeTab === 'transfers_ucp'
-              ? 'bg-amber-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-          }`}
-        >
-          <Truck className="w-4 h-4" />
-          <span>3. AI Stock Resupply & UCP Procurement Hub ({stockTransfers.length})</span>
-        </button>
-
-        <button
           onClick={() => setActiveTab('hospitals_beds')}
           className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
             activeTab === 'hospitals_beds'
               ? 'bg-amber-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
           }`}
         >
           <Building2 className="w-4 h-4" />
-          <span>4. Govt Hospitals & Specialist Duty Roster ({hospitals.length})</span>
+          <span>3. Govt Hospitals & Specialist Duty Roster ({hospitals.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('transfers_ucp')}
+          className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
+            activeTab === 'transfers_ucp'
+              ? 'bg-amber-600 text-white font-semibold shadow-sm'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
+          }`}
+        >
+          <Truck className="w-4 h-4" />
+          <span>4. AI Stock Resupply & UCP Procurement Hub ({stockTransfers.length})</span>
         </button>
 
         <button
@@ -308,7 +313,7 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
           className={`px-4 py-2.5 rounded-lg flex items-center gap-2 transition whitespace-nowrap ${
             activeTab === 'ledger_data'
               ? 'bg-amber-600 text-white font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100/60'
           }`}
         >
           <FileCheck2 className="w-4 h-4" />
@@ -332,16 +337,16 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
       {activeTab === 'stock_matrix' && (
         <div className="space-y-4">
           {/* Filtering Bar */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
               <div className="relative flex-1 sm:w-64">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-slate-600 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   value={medicineSearchQuery}
                   onChange={(e) => setMedicineSearchQuery(e.target.value)}
                   placeholder="Search medicine by name..."
-                  className="w-full pl-9 pr-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                  className="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 placeholder-slate-500 focus:outline-none focus:border-amber-500"
                 />
               </div>
 
@@ -349,7 +354,7 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
               <select
                 value={selectedPHCFilter}
                 onChange={(e) => setSelectedPHCFilter(e.target.value)}
-                className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500"
+                className="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-amber-500"
               >
                 <option value="ALL">All Primary Health Centres</option>
                 {phcs.map((p) => (
@@ -363,7 +368,7 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
               <select
                 value={selectedCategoryFilter}
                 onChange={(e) => setSelectedCategoryFilter(e.target.value)}
-                className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-amber-500"
+                className="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-amber-500"
               >
                 <option value="ALL">All Therapeutic Categories</option>
                 <option value="Antibiotic">Antibiotics</option>
@@ -374,16 +379,16 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
               </select>
             </div>
 
-            <div className="text-xs text-slate-400 font-mono">
+            <div className="text-xs text-slate-600 font-mono">
               Showing {filteredStocks.length} facility stock records
             </div>
           </div>
 
           {/* Master Table */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-slate-300">
-                <thead className="bg-slate-950 text-slate-400 text-[11px] uppercase border-b border-slate-800">
+              <table className="w-full text-left text-xs text-slate-700">
+                <thead className="bg-white text-slate-600 text-[11px] uppercase border-b border-slate-200">
                   <tr>
                     <th className="p-3">PHC Facility</th>
                     <th className="p-3">Medicine IP</th>
@@ -402,39 +407,39 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
                     const isCritical = item.availableStock <= item.criticalThreshold;
 
                     return (
-                      <tr key={item.id} className="hover:bg-slate-800/40">
+                      <tr key={item.id} className="hover:bg-slate-100/40">
                         <td className="p-3">
-                          <div className="font-semibold text-white">{phc?.name}</div>
-                          <div className="text-[10px] text-slate-400 capitalize">{phc?.areaType} • Store {phc?.storeId}</div>
+                          <div className="font-semibold text-slate-900">{phc?.name}</div>
+                          <div className="text-[10px] text-slate-600 capitalize">{phc?.areaType} • Store {phc?.storeId}</div>
                         </td>
                         <td className="p-3">
-                          <div className="font-medium text-white">{item.medicineName}</div>
-                          <div className="text-[10px] text-slate-400">{item.genericName}</div>
+                          <div className="font-medium text-slate-900">{item.medicineName}</div>
+                          <div className="text-[10px] text-slate-600">{item.genericName}</div>
                         </td>
                         <td className="p-3">
-                          <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300">
+                          <span className="px-2 py-0.5 rounded bg-slate-100 text-[10px] text-slate-700">
                             {item.category}
                           </span>
                         </td>
                         <td className="p-3 font-bold">
-                          <span className={isCritical ? 'text-rose-400' : 'text-emerald-400'}>
+                          <span className={isCritical ? 'text-rose-600' : 'text-emerald-600'}>
                             {item.availableStock} {item.unit}
                           </span>
                         </td>
-                        <td className="p-3 text-slate-300">{item.soldStock}</td>
-                        <td className="p-3 text-sky-400">{item.deliveredStock}</td>
-                        <td className="p-3 font-mono text-slate-400">{item.criticalThreshold}</td>
-                        <td className="p-3 text-[11px] font-mono text-slate-400">
+                        <td className="p-3 text-slate-700">{item.soldStock}</td>
+                        <td className="p-3 text-sky-600">{item.deliveredStock}</td>
+                        <td className="p-3 font-mono text-slate-600">{item.criticalThreshold}</td>
+                        <td className="p-3 text-[11px] font-mono text-slate-600">
                           <div>{item.batchNumber}</div>
                           <div className="text-[10px] text-slate-500">Exp: {item.expiryDate}</div>
                         </td>
                         <td className="p-3">
                           {isCritical ? (
-                            <span className="px-2 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40 flex items-center gap-1 w-fit">
+                            <span className="px-2 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-600 border border-rose-500/40 flex items-center gap-1 w-fit">
                               <AlertTriangle className="w-3 h-3" /> CRITICAL DEFICIT
                             </span>
                           ) : (
-                            <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1 w-fit">
+                            <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-600 border border-emerald-500/30 flex items-center gap-1 w-fit">
                               <CheckCircle2 className="w-3 h-3" /> ADEQUATE
                             </span>
                           )}
@@ -452,15 +457,15 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
       {/* TAB 3: AI RESUPPLY & UCP PROCUREMENT HUB */}
       {activeTab === 'transfers_ucp' && (
         <div className="space-y-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-600" />
                   AI-Directed Inter-PHC Stock Transfers & UCP Central Requisitions
                 </h3>
-                <p className="text-xs text-slate-400">
-                  Review and authorize dynamic reallocation orders generated by Med-PaLM based on epidemic surges, and central UCP emergency requests from facilities.
+                <p className="text-xs text-slate-600">
+                  Review and authorize dynamic reallocation orders generated by Gemini based on epidemic surges, and central UCP emergency requests from facilities.
                 </p>
               </div>
             </div>
@@ -469,54 +474,54 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
               {stockTransfers.map((trf) => (
                 <div
                   key={trf.id}
-                  className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+                  className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
                 >
                   <div className="space-y-2 flex-1">
                     <div className="flex items-center gap-2">
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                         trf.type === 'AI_REDISTRIBUTION'
-                          ? 'bg-purple-500/10 text-purple-300 border-purple-500/30'
-                          : 'bg-rose-500/10 text-rose-300 border-rose-500/30'
+                          ? 'bg-purple-500/10 text-purple-700 border-purple-500/30'
+                          : 'bg-rose-500/10 text-rose-700 border-rose-500/30'
                       }`}>
                         {trf.type === 'AI_REDISTRIBUTION' ? 'Inter-PHC Redistribution' : 'UCP Emergency Procurement'}
                       </span>
-                      <span className="text-xs font-mono text-slate-400">Ref: {trf.id}</span>
+                      <span className="text-xs font-mono text-slate-600">Ref: {trf.id}</span>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
                         trf.urgency === 'EMERGENCY'
                           ? 'bg-rose-500 text-white animate-pulse'
-                          : 'bg-amber-500/20 text-amber-300'
+                          : 'bg-amber-500/20 text-amber-700'
                       }`}>
                         {trf.urgency} PRIORITY
                       </span>
                     </div>
 
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <h4 className="font-bold text-base text-white">
+                      <h4 className="font-bold text-base text-slate-900">
                         {trf.medicineName}
-                        <span className="text-amber-400 ml-2 bg-amber-500/10 px-2 py-0.5 rounded text-sm">{trf.quantity} {trf.unit} required</span>
+                        <span className="text-amber-600 ml-2 bg-amber-500/10 px-2 py-0.5 rounded text-sm">{trf.quantity} {trf.unit} required</span>
                       </h4>
                     </div>
 
-                    <div className="text-xs text-slate-300 flex items-center gap-2 flex-wrap bg-slate-900 px-3 py-2 rounded-lg">
-                      <span className="text-slate-400">{trf.type === 'UCP_PROCUREMENT' ? 'Central Warehouse:' : 'Source PHC:'}</span> 
-                      <strong className="text-sky-300">{trf.fromFacilityName}</strong>
+                    <div className="text-xs text-slate-700 flex items-center gap-2 flex-wrap bg-slate-50 px-3 py-2 rounded-lg">
+                      <span className="text-slate-600">{trf.type === 'UCP_PROCUREMENT' ? 'Central Warehouse:' : 'Source PHC:'}</span> 
+                      <strong className="text-sky-700">{trf.fromFacilityName}</strong>
                       <span className="text-slate-500">➔</span>
-                      <span className="text-slate-400">Receiving Facility:</span> 
-                      <strong className="text-emerald-300">{trf.toFacilityName}</strong>
+                      <span className="text-slate-600">Receiving Facility:</span> 
+                      <strong className="text-emerald-700">{trf.toFacilityName}</strong>
                     </div>
 
-                    <p className="text-xs text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mt-2">
-                      <strong className="text-slate-300">Justification:</strong> {trf.reason}
+                    <p className="text-xs text-slate-600 bg-slate-50/60 p-2.5 rounded-lg border border-slate-200/80 mt-2">
+                      <strong className="text-slate-700">Justification:</strong> {trf.reason}
                     </p>
                   </div>
 
-                  <div className="flex flex-col sm:items-end gap-2 shrink-0 border-t lg:border-t-0 lg:border-l border-slate-800 pt-3 lg:pt-0 lg:pl-4">
+                  <div className="flex flex-col sm:items-end gap-2 shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 pt-3 lg:pt-0 lg:pl-4">
                     <span className={`text-xs font-bold px-3 py-1.5 rounded-lg w-full text-center ${
                       trf.status === 'DELIVERED'
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                        ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/30'
                         : trf.status === 'DISPATCHED'
-                        ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30'
-                        : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        ? 'bg-sky-500/20 text-sky-700 border border-sky-500/30'
+                        : 'bg-amber-500/20 text-amber-700 border border-amber-500/30'
                     }`}>
                       Status: {trf.status.replace('_', ' ')}
                     </span>
@@ -546,24 +551,24 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
               const bedPct = Math.round((hosp.occupiedBeds / hosp.totalBeds) * 100);
 
               return (
-                <div key={hosp.id} className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+                <div key={hosp.id} className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700">
                         {hosp.type}
                       </span>
-                      <h4 className="font-bold text-base text-white mt-1">{hosp.name}</h4>
+                      <h4 className="font-bold text-base text-slate-900 mt-1">{hosp.name}</h4>
                     </div>
                   </div>
 
                   
                   {/* Bed Occupancy Progress */}
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs text-slate-300">
+                    <div className="flex justify-between text-xs text-slate-700">
                       <span>Total Bed Occupancy</span>
                       <span className="font-bold">{hosp.occupiedBeds} / {hosp.totalBeds} ({bedPct}%)</span>
                     </div>
-                    <div className="w-full h-2 rounded-full bg-slate-950 overflow-hidden">
+                    <div className="w-full h-2 rounded-full bg-white overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${
                           bedPct > 85 ? 'bg-rose-500' : 'bg-sky-500'
@@ -574,8 +579,8 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
                   </div>
 
                   {/* Department Resource Allocation Breakdown */}
-                  <div className="bg-slate-950/40 rounded-xl p-3 border border-slate-800/50">
-                    <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-2">Department Allocation & Specialists</h5>
+                  <div className="bg-white/40 rounded-xl p-3 border border-slate-200/50">
+                    <h5 className="text-[10px] font-bold text-slate-600 uppercase tracking-wide mb-2">Department Allocation & Specialists</h5>
                     <div className="space-y-2">
                       {hosp.specialistsByDepartment && Object.entries(hosp.specialistsByDepartment).map(([dept, count]) => {
                         // Simulate an estimated bed allocation per department for actionable data
@@ -585,13 +590,13 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
                         return (
                           <div key={dept} className="flex flex-col gap-1">
                             <div className="flex items-center justify-between text-[11px]">
-                              <span className="font-medium text-slate-200">{dept}</span>
+                              <span className="font-medium text-slate-800">{dept}</span>
                               <div className="flex items-center gap-3">
-                                <span className="text-slate-400">Dr: <strong className="text-emerald-400">{count}</strong></span>
-                                <span className="text-slate-400">Beds: <strong className={deptPct > 85 ? 'text-rose-400' : 'text-sky-400'}>{occupiedBedsForDept}/{totalBedsForDept}</strong></span>
+                                <span className="text-slate-600">Dr: <strong className="text-emerald-600">{count}</strong></span>
+                                <span className="text-slate-600">Beds: <strong className={deptPct > 85 ? 'text-rose-600' : 'text-sky-600'}>{occupiedBedsForDept}/{totalBedsForDept}</strong></span>
                               </div>
                             </div>
-                            <div className="w-full h-1 rounded-full bg-slate-900 overflow-hidden">
+                            <div className="w-full h-1 rounded-full bg-slate-50 overflow-hidden">
                               <div className={`h-full rounded-full ${deptPct > 85 ? 'bg-rose-500' : 'bg-sky-500'}`} style={{ width: `${Math.min(100, deptPct)}%` }}></div>
                             </div>
                           </div>
@@ -603,45 +608,45 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
                   {/* Key Metrics Grid */}
 
                   <div className="grid grid-cols-2 gap-2 text-center text-xs">
-                    <div className="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">ICU Beds</div>
-                      <div className="text-sm font-bold text-rose-400 mt-0.5">
+                    <div className="p-2.5 bg-white/60 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-600">ICU Beds</div>
+                      <div className="text-sm font-bold text-rose-600 mt-0.5">
                         {hosp.icuOccupied} / {hosp.icuBeds}
                       </div>
                     </div>
 
-                    <div className="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">Ventilators</div>
-                      <div className="text-sm font-bold text-sky-400 mt-0.5">
+                    <div className="p-2.5 bg-white/60 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-600">Ventilators</div>
+                      <div className="text-sm font-bold text-sky-600 mt-0.5">
                         {hosp.ventilatorsOccupied} / {hosp.ventilators}
                       </div>
                     </div>
 
-                    <div className="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">Specialist Rate</div>
-                      <div className="text-sm font-bold text-emerald-400 mt-0.5">
+                    <div className="p-2.5 bg-white/60 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-600">Specialist Rate</div>
+                      <div className="text-sm font-bold text-emerald-600 mt-0.5">
                         {hosp.specialistRate}%
                       </div>
                     </div>
 
-                    <div className="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
-                      <div className="text-[10px] text-slate-400">Emergency Response</div>
-                      <div className="text-sm font-bold text-amber-400 mt-0.5">
+                    <div className="p-2.5 bg-white/60 rounded-xl border border-slate-200">
+                      <div className="text-[10px] text-slate-600">Emergency Response</div>
+                      <div className="text-sm font-bold text-amber-600 mt-0.5">
                         {hosp.emergencyResponseMinutes} min
                       </div>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400">
+                  <div className="pt-2 border-t border-slate-200 text-[11px] text-slate-600">
                     <div className="flex items-center justify-between mb-2">
                       <span>Active Specialists on Duty:</span>
-                      <strong className="text-slate-200">{hosp.activeDoctors} of {hosp.totalDoctors}</strong>
+                      <strong className="text-slate-800">{hosp.activeDoctors} of {hosp.totalDoctors}</strong>
                     </div>
                     {hosp.specialistsByDepartment && (
                       <div className="flex flex-wrap gap-1.5">
                         {Object.entries(hosp.specialistsByDepartment).map(([dept, count]) => (
-                          <span key={dept} className="px-2 py-0.5 bg-slate-800/80 rounded-md text-[10px] text-slate-300">
-                            {dept}: <strong className="text-white">{count}</strong>
+                          <span key={dept} className="px-2 py-0.5 bg-slate-100/80 rounded-md text-[10px] text-slate-700">
+                            {dept}: <strong className="text-slate-900">{count}</strong>
                           </span>
                         ))}
                       </div>
@@ -657,16 +662,16 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
       {/* TAB 5: LEDGER DATA */}
       {activeTab === 'ledger_data' && (
         <div className="space-y-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <FileCheck2 className="w-4 h-4 text-emerald-400" />
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <FileCheck2 className="w-4 h-4 text-emerald-600" />
               Uploaded Facility Ledgers
             </h3>
             
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[700px]">
                 <thead>
-                  <tr className="border-b border-slate-700 bg-slate-800/40 text-slate-400 text-xs uppercase tracking-wider">
+                  <tr className="border-b border-slate-300 bg-slate-100/40 text-slate-600 text-xs uppercase tracking-wider">
                     <th className="p-3 font-medium rounded-tl-lg">Facility / ID</th>
                     <th className="p-3 font-medium">Method</th>
                     <th className="p-3 font-medium">Medicine Name</th>
@@ -681,22 +686,22 @@ export const DMODashboard: React.FC<DMODashboardProps> = ({
                     ledgerEntries.map((entry: any) => {
                       const phc = phcs.find((p) => p.id === entry.phcId);
                       return (
-                        <tr key={entry.id} className="hover:bg-slate-800/40 text-sm">
+                        <tr key={entry.id} className="hover:bg-slate-100/40 text-sm">
                           <td className="p-3">
-                            <div className="font-semibold text-white">{phc?.name || entry.phcId}</div>
-                            <div className="text-[10px] text-slate-400">Store: {entry.storeId}</div>
+                            <div className="font-semibold text-slate-900">{phc?.name || entry.phcId}</div>
+                            <div className="text-[10px] text-slate-600">Store: {entry.storeId}</div>
                           </td>
                           <td className="p-3">
-                            <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300">
+                            <span className="px-2 py-0.5 rounded bg-slate-100 text-[10px] text-slate-700">
                               {entry.uploadMethod}
                             </span>
                           </td>
-                          <td className="p-3 font-medium text-white">{entry.medicineName}</td>
-                          <td className="p-3 font-mono text-[11px] text-slate-400">{entry.batchNumber}</td>
-                          <td className="p-3 font-bold text-emerald-400">{entry.quantitySold}</td>
-                          <td className="p-3 text-[11px] text-slate-400">{new Date(entry.timestamp).toLocaleString()}</td>
+                          <td className="p-3 font-medium text-slate-900">{entry.medicineName}</td>
+                          <td className="p-3 font-mono text-[11px] text-slate-600">{entry.batchNumber}</td>
+                          <td className="p-3 font-bold text-emerald-600">{entry.quantitySold}</td>
+                          <td className="p-3 text-[11px] text-slate-600">{new Date(entry.timestamp).toLocaleString()}</td>
                           <td className="p-3">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${entry.status === 'verified' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-slate-800 text-slate-400'}`}>
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${entry.status === 'verified' ? 'bg-emerald-500/20 text-emerald-600 border border-emerald-500/40' : 'bg-slate-100 text-slate-600'}`}>
                               {entry.status.toUpperCase()}
                             </span>
                           </td>
